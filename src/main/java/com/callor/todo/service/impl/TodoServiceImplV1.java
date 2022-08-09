@@ -23,9 +23,9 @@ public class TodoServiceImplV1 implements TodoService{
 	}
 
 	@Override
-	public TodoVO findById(String id) {
+	public TodoVO findById(String t_author) {
 		// TODO Auto-generated method stub
-		return todoDao.findById(id);
+		return todoDao.findById(t_author);
 	}
 
 	@Override
@@ -41,9 +41,9 @@ public class TodoServiceImplV1 implements TodoService{
 	}
 
 	@Override
-	public int delete(String id) {
+	public int delete(String t_seq) {
 		// TODO Auto-generated method stub
-		return todoDao.delete(id);
+		return todoDao.delete(t_seq);
 	}
 
 	@Bean
@@ -51,6 +51,18 @@ public class TodoServiceImplV1 implements TodoService{
 	public void create_todo_table() {
 		todoDao.create_todo_table();
 		
+	}
+
+	@Override
+	public void completeUpdate(String t_seq) {
+		
+		TodoVO todoVO = todoDao.findById(t_seq);
+		if(todoVO.isT_complete() == false) {
+			todoVO.setT_complete(true);
+		} else {
+			todoVO.setT_complete(false);
+		}
+		todoDao.update(todoVO);
 	}
 
 }

@@ -12,11 +12,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form:form modelAttribute="memo" enctype="multipart/form-data">
-		<form:input path="t_sdate"  type="hidden"/>
-		<form:input path="t_stime"  type="hidden"/>
-		<form:input path="t_author"  type="hidden"/>
-		<form:input path="t_content"/>
+	<form:form modelAttribute="memo">
+		<form:input path="t_sdate"  type="date" value="${TODO.t_sdate}"/>
+		<form:input path="t_stime"  type="time" value="${TODO.t_stime}"/>
+		<form:input path="t_content" />
 		<button>작성완료</button>
 	</form:form>
 </body>

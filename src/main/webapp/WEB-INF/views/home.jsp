@@ -57,9 +57,7 @@ form#logout-form {
 				<li><a href="${rootPath}/user/login">로그인</a></li>
 				<li><a href="${rootPath}/user/join">회원가입</a></li>
 			</sec:authorize>
-
 			<sec:authorize access="isAuthenticated()">
-				<li><a href="${rootPath}/todo/list">Todo List 보기</a></li>
 				<li class="logout">로그아웃</li>
 				<sec:authorize access="hasRole('ROLE_USER')">
 					<li><a href="${rootPath}/user/mypage">Mypage</a></li>
@@ -87,21 +85,31 @@ form#logout-form {
 						<th>작성시각</th>
 						<th>메모</th>
 					</tr>
-					<c:if test="${empty MEMOS}">
+					<c:if test="${empty TODOS}">
 						<tr>
 							<td colspan="4">메모가 없습니다</td>
 						</tr>
 					</c:if>
-					<c:forEach items="${MEMOS}" var="MEMO" varStatus="INDEX">
-						<tr data-seq="${MEMO.m_seq}">
+					
+					
+					
+					
+					
+					
+					<c:forEach items="${TODOS}" var="TODO" varStatus="INDEX">
+						<tr data-seq="${TODO.t_seq}">
 							<td>${INDEX.count}</td>
-							<td>${MEMO.m_date}</td>
-							<td>${MEMO.m_time}</td>
-							<td>${MEMO.m_memo}</td>
+							<td>${TODO.t_sdate}</td>
+							<td>${TODO.t_stime}</td>
+							<td>${TODO.t_content}</td>
+							<td>${TODO.t_author}</td>
+							<td><a href="${rootPath}/todo/insert?seq=${TODO.t_seq}">수정</a></td>
+							<td><input type="checkbox" value="${TODO.t_complete}"/>완료</td>
+							<td><a href="${rootPath}/delete">Todo 삭제하기</a></td>
 						</tr>
 					</c:forEach>
 				</table>
-				<a href="${rootPath}/todo/insert">메모작성하기</a>
+				<a href="${rootPath}/todo/insert">Todo 추가하기</a>
 			</c:otherwise>
 		</c:choose>
 	</section>

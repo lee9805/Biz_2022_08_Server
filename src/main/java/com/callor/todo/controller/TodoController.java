@@ -1,9 +1,9 @@
 package com.callor.todo.controller;
 
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.servlet.http.HttpSession;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,22 +23,31 @@ public class TodoController {
 	private TodoService tService;
 
 	@RequestMapping(value="/insert", method=RequestMethod.GET)
-	public String list(@ModelAttribute("memo") TodoVO todo,
-						HttpSession httpSession,Model model) {
-		String username = (String) httpSession.getAttribute("USERNAME");
-		tService.selectAll();
-		todo.setT_author(username);
-		model.addAttribute(tService);
+	public String list(@ModelAttribute("memo") TodoVO todo,Principal principal, String username) {
+		todo = tService.findById(username);
 		return "todo/insert";
 	}
 	@RequestMapping(value="/insert", method=RequestMethod.POST)
-	public String list(@ModelAttribute("memo") TodoVO todo,Model model,
-						HttpSession httpSession) {
-		String username = (String) httpSession.getAttribute("USERNAME");
-		
-		todo.setT_author(username);
+	public String list(@ModelAttribute("memo") TodoVO todo,Model model, Principal principal) {
 		tService.insert(todo);
+		return "redirect:/";
+	}
+	@RequestMapping(value="/update",method=RequestMethod.GET)
+	public String update(String t_seq,Model model) {
+		TodoVO todoVO = tService.findById(t_seq);
+		model.addAttribute("TODO", todoVO);
+		return "redirect:/todo/insert?seq=" + todoVO.getT_seq();
+	}
+	@RequestMapping(value="/update",method=RequestMethod.POST)
+	public String update(TodoVO todoVO,Model model) {
+		tService.update(todoVO);
+		return "redirect:/";
+	}
+
+	@RequestMapping(value="/delete",method=RequestMethod.POST)
+	public String delete(String t_seq) {
 		
+		tService.delete(t_seq);
 		return "redirect:/";
 	}
 	

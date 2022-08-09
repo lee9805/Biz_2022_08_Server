@@ -22,5 +22,6 @@ public class TodoVO {
 	private String t_content;
 	private String t_edate;
 	private String t_etime;
+	private boolean t_complete;
 	
 }

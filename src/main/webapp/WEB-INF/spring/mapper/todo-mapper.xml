@@ -45,9 +45,13 @@
 
  			WHERE t_seq = #{t_seq}
  	</update>
+ 	<update id="completeUpdate" parameterType="TodoVO">
+ 		UPDATE tbl_todoList SET t_complete = #{t_complete}
+ 		WHERE t_seq = #{t_seq}
+ 	</update>
  	<delete id="delete">
- 	 	DELETE FROM tbl_memos
- 		WHERE m_seq = #{m_seq}
+ 	 	DELETE FROM tbl_todoList
+ 		WHERE t_seq = #{t_seq}
  	</delete>
  	<select id="create_todo_table">
  		CREATE TABLE IF NOT EXISTS tbl_todoList (
@@ -57,7 +61,8 @@
  			t_author varchar(20),
  			t_content varchar(125),
  			t_edate varchar(20),
- 			t_etime varchar(20)
+ 			t_etime varchar(20),
+ 			t_complete boolean default true
  		)
  	</select>
  
